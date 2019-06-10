@@ -13,7 +13,7 @@ namespace RobotBuilderService.Tests
 
         class AppHost : AppSelfHostBase
         {
-            public AppHost() : base(nameof(IntegrationTest), typeof(MyServices).Assembly) { }
+            public AppHost() : base(nameof(IntegrationTest), typeof(BotServices).Assembly) { }
 
             public override void Configure(Container container)
             {

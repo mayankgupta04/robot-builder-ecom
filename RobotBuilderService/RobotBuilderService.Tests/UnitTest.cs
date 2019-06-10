@@ -13,7 +13,7 @@ namespace RobotBuilderService.Tests
         public UnitTest()
         {
             appHost = new BasicAppHost().Init();
-            appHost.Container.AddTransient<MyServices>();
+            appHost.Container.AddTransient<BotServices>();
         }
 
         [OneTimeTearDown]
@@ -22,11 +22,11 @@ namespace RobotBuilderService.Tests
         [Test]
         public void Can_call_MyServices()
         {
-            var service = appHost.Container.Resolve<MyServices>();
+            var service = appHost.Container.Resolve<BotServices>();
 
-            var response = (HelloResponse)service.Any(new Hello { Name = "World" });
+            var response = (BotPartsResponse)service.Get(new BotParts());
 
-            Assert.That(response.Result, Is.EqualTo("Hello, World!"));
+            Assert.That(response.BotPartsResult, Is.EqualTo("Hello, World!"));
         }
     }
 }

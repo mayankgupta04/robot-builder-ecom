@@ -11,7 +11,7 @@ namespace RobotBuilderService
         /// Base constructor requires a Name and Assembly where web service implementation is located
         /// </summary>
         public AppHost()
-            : base("RobotBuilderService", typeof(MyServices).Assembly) { }
+            : base("RobotBuilderService", typeof(BotServices).Assembly) { }
 
         /// <summary>
         /// Application specific configuration
