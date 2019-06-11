@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div v-if="availableParts" class="content">
     <button class="add-to-cart" @click="addToCart()">Add bot to cart!</button>
     <div class="top-row">
       <div class="robot-name">
@@ -57,7 +57,6 @@
 </template>
 
 <script>
-import availableParts from '../data/parts';
 import PartSelector from './PartSelector.vue';
 
 export default {
@@ -65,7 +64,6 @@ export default {
   components: { PartSelector },
   data() {
     return {
-      availableParts,
       cart: [],
       selectedRobot: {
         head: {},
@@ -75,6 +73,14 @@ export default {
         base: {},
       },
     };
+  },
+  created() {
+    this.$store.dispatch('getBotPartsFromApi');
+  },
+  computed: {
+    availableParts() {
+      return this.$store.state.parts;
+    },
   },
   methods: {
     addToCart() {
