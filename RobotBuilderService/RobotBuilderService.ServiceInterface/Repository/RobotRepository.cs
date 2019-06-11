@@ -43,7 +43,7 @@ namespace RobotBuilderService.ServiceInterface.Repository
             }
             catch (Exception ex)
             {
-                // Log the exception
+                // Log the exception.
                 return null;
             }
         }
