@@ -1,12 +1,18 @@
 <template>
   <div class="part" :class="position">
-    <img @click="showPartInfo()" :src="selectedPart.src" title="arm">
+    <img @click="showPartInfo()" :src="images[selectedPart.src]" title="arm">
     <button @click="selectPreviousPart()" class="prev-selector"></button>
     <button @click="selectNextPart()" class="next-selector"></button>
   </div>
 </template>
 
 <script>
+function importAll(r) {
+  const images = {};
+  r.keys().map(item => images[item.replace('./', '')] = r(item));
+  return images;
+}
+
 function getPreviousValidIndex(index, length) {
   const deprecatedIndex = index - 1;
   return deprecatedIndex < 0 ? length - 1 : deprecatedIndex;
@@ -33,11 +39,16 @@ export default {
     },
   },
   data() {
-    return { selectedPartIndex: 0 };
+    return {
+      selectedPartIndex: 0,
+    };
   },
   computed: {
     selectedPart() {
       return this.parts[this.selectedPartIndex];
+    },
+    images() {
+      return importAll(require.context('../assets/images', true, /\.png$/));
     },
   },
   created() {

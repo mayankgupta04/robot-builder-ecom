@@ -6,17 +6,19 @@
 </template>
 
 <script>
-import parts from '../data/parts';
+import getPartsMixin from './get-parts-mixin';
 
 export default {
   name: 'PartInfo',
   props: ['id', 'partType'],
+  mixins: [getPartsMixin],
   computed: {
     part() {
       const { partType, id } = this;
-      return parts[partType].find(p => p.id === +id);
+      return this.parts[partType].find(p => p.id === +id);
     },
   },
+
 };
 </script>
 

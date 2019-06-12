@@ -11,12 +11,13 @@
 </template>
 
 <script>
-import parts from '../data/parts';
+import getPartsMixin from './get-parts-mixin';
 
 export default {
   name: 'RobotHeads',
+  mixins: [getPartsMixin],
   data() {
-    return { heads: parts.heads };
+    return { heads: this.parts.heads };
   },
 };
 </script>
