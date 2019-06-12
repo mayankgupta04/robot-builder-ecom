@@ -36,23 +36,6 @@
         @partSelected="part => selectedRobot.base = part"
       ></part-selector>
     </div>
-    <div class="cart">
-      <h1>Cart</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Robot</th>
-            <th class="cost">Cost</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(bot, index) in cart" :key="index">
-            <td>{{bot.head.title}}</td>
-            <td class="cost">{{bot.cost}}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
   </div>
 </template>
 
@@ -90,7 +73,7 @@ export default {
         + robot.rightArm.cost
         + robot.torso.cost
         + robot.base.cost;
-      this.cart.push(Object.assign({}, robot, { cost }));
+      this.$store.commit('addBotToCart', Object.assign({}, robot, { cost }));
     },
   },
 };

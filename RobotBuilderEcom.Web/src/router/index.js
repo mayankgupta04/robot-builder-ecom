@@ -9,6 +9,7 @@ import RobotHeads from '../parts/RobotHeads.vue';
 import RobotArms from '../parts/RobotArms.vue';
 import RobotBases from '../parts/RobotBases.vue';
 import RobotTorsos from '../parts/RobotTorsos.vue';
+import ShoppingCart from '../cart/ShoppingCart.vue';
 
 Vue.use(Router);
 
@@ -55,5 +56,10 @@ export default new Router({
     name: 'Parts',
     component: PartInfo,
     props: true,
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: ShoppingCart,
   }],
 });

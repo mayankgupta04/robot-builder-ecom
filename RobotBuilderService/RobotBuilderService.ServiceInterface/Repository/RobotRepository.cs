@@ -12,7 +12,7 @@ namespace RobotBuilderService.ServiceInterface.Repository
     {
         private RobotBuilderContext _dbContext;
 
-        RobotRepository()
+        public RobotRepository()
         {
             this._dbContext = new RobotBuilderContext();
         }
