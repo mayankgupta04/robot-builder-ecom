@@ -7,23 +7,25 @@ namespace RobotBuilderService.ServiceInterface.Migrations
     {
         public override void Up()
         {
-            CreateTable(
-                "dbo.RobotParts",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Title = c.String(),
-                        Description = c.String(),
-                        Type = c.String(),
-                        Cost = c.Double(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
-            
+            // Create BotCart Table.
+            CreateTable("dbo.CartBots",
+                x => new
+                {
+                    CartBotId = x.Int(nullable: false, identity: true),
+                    HeadId = x.Int(nullable: false),
+                    LeftArmId = x.Int(nullable: false),
+                    RightArmId = x.Int(nullable: false),
+                    TorsoId = x.Int(nullable: false),
+                    BaseId = x.Int(nullable: false),
+                    IsActive = x.Boolean(nullable: false, defaultValue: true),
+                    Cost = x.Decimal(nullable: false)
+                })
+                .PrimaryKey(b => b.CartBotId, "BotCartPrimaryKeyConstraint", true);
         }
-        
+
         public override void Down()
         {
-            DropTable("dbo.RobotParts");
+            DropTable("dbo.BotCart");
         }
     }
 }

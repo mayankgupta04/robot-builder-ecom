@@ -1,10 +1,8 @@
 ﻿using RobotBuilderService.ServiceInterface.Context;
-using RobotBuilderService.ServiceInterface.Data.Entities;
-using System;
-using System.Collections.Generic;
+using RobotBuilderService.ServiceInterface.Context.Entities;
+using RobotBuilderService.ServiceModel;
+using ServiceStack;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RobotBuilderService.ServiceInterface.Repository
 {
@@ -14,38 +12,54 @@ namespace RobotBuilderService.ServiceInterface.Repository
 
         public RobotRepository()
         {
-            this._dbContext = new RobotBuilderContext();
+            _dbContext = new RobotBuilderContext();
         }
 
-        public List<RobotPart> GetRobotParts()
+        // Add a method to save item in BotCart        
+        public int AddNewBot(BotDataModel model)
         {
-            try
-            {
-                return this._dbContext.Robot.ToList();
-            }
-            catch(Exception ex)
-            {
-                // Log the exception.
-                return null;
-            }
+            var newBot = new CartBot(model.HeadId, model.LeftArmId, model.RightArmId, model.TorsoId, model.BaseId, model.Cost);
+            _dbContext.Robots.Add(newBot);
+            _dbContext.SaveChanges();
+
+            return newBot.CartBotId;
         }
 
-        public List<RobotPart> GetRobotPart(int id, string type)
+        public void UpdateBot(UpdateBotDataModel model)
         {
-            try
-            {
-                if (!string.IsNullOrWhiteSpace(type) && id > 0)
-                {
-                    return this._dbContext.Robot.Where(x => x.Id == id && x.Type.Equals(type)).ToList();
-                }
+            var botToUpdate = _dbContext.Robots.Find(model.CartBotId);
+            botToUpdate.BaseId = model.BaseId;
+            botToUpdate.Cost = model.Cost;
+            botToUpdate.HeadId = model.HeadId;
+            botToUpdate.LeftArmId = model.LeftArmId;
+            botToUpdate.RightArmId = model.RightArmId;
+            botToUpdate.TorsoId = model.TorsoId;
 
-                return null;
-            }
-            catch (Exception ex)
-            {
-                // Log the exception.
-                return null;
-            }
+            _dbContext.SaveChanges();
+        }
+
+        public void SoftDeleteBot(SoftDeleteBot model)
+        {
+            var robotToSoftDelete = _dbContext.Robots.Find(model.CartBotId);
+            robotToSoftDelete.IsActive = false;
+            _dbContext.SaveChanges();
+        }
+
+        public void HardDeleteBot(HardDeleteBot model)
+        {
+            var robotToHardDelete = _dbContext.Robots.Find(model.CartBotId);
+            _dbContext.Robots.Remove(robotToHardDelete);
+            _dbContext.SaveChanges();
+        }
+
+        public object GetCartBotById(CartBotDetails model)
+        {
+            return _dbContext.Robots.Find(model.CartBotId);
+        }
+
+        public object GetCartBots()
+        {
+            return _dbContext.Robots.ToList();
         }
     }
 }

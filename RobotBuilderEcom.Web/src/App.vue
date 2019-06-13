@@ -39,6 +39,9 @@
 <script>
 export default {
   name: 'app',
+  created() {
+    this.$store.dispatch('getBotPartsFromApi');
+  },
   computed: {
     cartLength() {
       return this.$store.state.cart.length;

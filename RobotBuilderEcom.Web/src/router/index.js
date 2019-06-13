@@ -3,6 +3,7 @@ import Router from 'vue-router';
 
 import HomePage from '../home/HomePage.vue';
 import RobotBuilder from '../build/RobotBuilder.vue';
+import UpdateBot from '../build/UpdateBot.vue';
 import PartInfo from '../parts/PartInfo.vue';
 import BrowseParts from '../parts/BrowseParts.vue';
 import RobotHeads from '../parts/RobotHeads.vue';
@@ -61,5 +62,11 @@ export default new Router({
     path: '/cart',
     name: 'Cart',
     component: ShoppingCart,
+  },
+  {
+    path: '/update/:cartBotId',
+    name: 'UpdateBot',
+    component: UpdateBot,
+    props: true,
   }],
 });

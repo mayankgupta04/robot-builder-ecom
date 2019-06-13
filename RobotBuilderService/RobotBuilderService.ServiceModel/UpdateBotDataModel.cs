@@ -6,8 +6,8 @@ using ServiceStack;
 
 namespace RobotBuilderService.ServiceModel
 {
-    [Route("/api/addbot", "POST")]
-    public class BotDataModel : IReturn<BotDataModelResponse>
+    [Route("/api/updatebot", "POST")]
+    public class UpdateBotDataModel : IReturn<UpdateBotDataModelResponse>
     {
         public int CartBotId { get; set; }
         public int HeadId { get; set; }
@@ -18,7 +18,7 @@ namespace RobotBuilderService.ServiceModel
         public decimal Cost { get; set; }
     }
 
-    public class BotDataModelResponse
+    public class UpdateBotDataModelResponse
     {
         public int Id { get; set; }
     }

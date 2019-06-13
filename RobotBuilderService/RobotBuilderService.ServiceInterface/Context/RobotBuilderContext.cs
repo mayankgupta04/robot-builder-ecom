@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.Entity;
-using RobotBuilderService.ServiceInterface.Data.Entities;
+﻿using System.Data.Entity;
+using RobotBuilderService.ServiceInterface.Context.Entities;
 
 namespace RobotBuilderService.ServiceInterface.Context
 {
@@ -15,6 +10,12 @@ namespace RobotBuilderService.ServiceInterface.Context
         {
         }
 
-        public virtual DbSet<RobotPart> Robot { get; set; }
+        public virtual DbSet<CartBot> Robots { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            Database.SetInitializer<RobotBuilderContext>(null);
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }

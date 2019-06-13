@@ -50,6 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UpdateBotDataModel.cs" />
+    <Compile Include="CartBotDetails.cs" />
+    <Compile Include="HardDeleteBot.cs" />
+    <Compile Include="SoftDeleteBot.cs" />
     <Compile Include="BotDataModel.cs" />
     <Compile Include="CartItems.cs" />
     <Compile Include="BotParts.cs" />

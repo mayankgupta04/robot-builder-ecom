@@ -1,5 +1,5 @@
 <template>
-  <div class="part" :class="position">
+  <div class="part" :class="position" v-if="selectedPart">
     <img @click="showPartInfo()" :src="images[selectedPart.src]" title="arm">
     <button @click="selectPreviousPart()" class="prev-selector"></button>
     <button @click="selectNextPart()" class="next-selector"></button>
@@ -37,10 +37,14 @@ export default {
         return ['top', 'bottom', 'left', 'right', 'center'].includes(value);
       },
     },
+    selectedPartId: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
-      selectedPartIndex: 0,
+      selectedPartIndex: this.selectedPartId === 0 ? 0 : this.selectedPartId - 1,
     };
   },
   computed: {

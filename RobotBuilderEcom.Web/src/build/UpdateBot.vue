@@ -1,6 +1,6 @@
 <template>
   <div v-if="availableParts" class="content">
-    <button class="add-to-cart" @click="addToCart()">Add bot to cart!</button>
+    <button class="add-to-cart" @click="updateInCart()">Update!</button>
     <div class="top-row">
       <div class="robot-name">
         {{selectedRobot.head.title}}
@@ -8,6 +8,7 @@
       </div>
       <part-selector
         :parts="availableParts.heads"
+        :selectedPartId="selectedRobot.head.id"
         position="top"
         @partSelected="part => selectedRobot.head = part"
       ></part-selector>
@@ -15,16 +16,19 @@
     <div class="middle-row">
       <part-selector
         :parts="availableParts.arms"
+        :selectedPartId="selectedRobot.leftArm.id"
         position="left"
         @partSelected="part => selectedRobot.leftArm = part"
       ></part-selector>
       <part-selector
         :parts="availableParts.torsos"
+        :selectedPartId="selectedRobot.torso.id"
         position="center"
         @partSelected="part => selectedRobot.torso = part"
       ></part-selector>
       <part-selector
         :parts="availableParts.arms"
+        :selectedPartId="selectedRobot.rightArm.id"
         position="right"
         @partSelected="part => selectedRobot.rightArm = part"
       ></part-selector>
@@ -32,6 +36,7 @@
     <div class="bottom-row">
       <part-selector
         :parts="availableParts.bases"
+        :selectedPartId="selectedRobot.base.id"
         position="bottom"
         @partSelected="part => selectedRobot.base = part"
       ></part-selector>
@@ -45,32 +50,42 @@ import PartSelector from './PartSelector.vue';
 export default {
   name: 'RobotBuilder',
   components: { PartSelector },
+  props: ['cartBotId'],
   data() {
     return {
       cart: [],
-      selectedRobot: {
-        head: {},
-        leftArm: {},
-        rightArm: {},
-        torso: {},
-        base: {},
-      },
     };
+  },
+  created() {
+    if (this.$route.params.cartBotId) {
+      this.$store.dispatch('getCartBotById', { cartBotId: this.$route.params.cartBotId });
+    }
   },
   computed: {
     availableParts() {
       return this.$store.state.parts;
     },
+    selectedRobot() {
+      return this.$store.state.botToUpdate || {
+        head: {},
+        leftArm: {},
+        rightArm: {},
+        torso: {},
+        base: {},
+      };
+    },
   },
   methods: {
-    addToCart() {
+    updateInCart() {
       const robot = this.selectedRobot;
       const cost = robot.head.cost
         + robot.leftArm.cost
         + robot.rightArm.cost
         + robot.torso.cost
         + robot.base.cost;
-      this.$store.dispatch('addBotToCart', Object.assign({}, robot, { cost }));
+      this.$store.dispatch('updateBotToCart', Object.assign({}, robot, { cost, cartBotId: this.cartBotId }))
+        .then(() => this.$router.push('/cart'))
+        .catch(console.error);
     },
   },
 };

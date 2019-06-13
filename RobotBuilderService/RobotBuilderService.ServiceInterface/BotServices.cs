@@ -20,14 +20,39 @@ namespace RobotBuilderService.ServiceInterface
             return new BotPartsResponse { BotPartsResult = GetBotPartsJsonData() };
         }
 
-        public long Post(BotDataModel request)
+        public int Post(BotDataModel request)
         {
-            return 1L;
+            return _repo.AddNewBot(request);
+        }
+
+        public void Post(UpdateBotDataModel request)
+        {
+            _repo.UpdateBot(request);
+        }
+
+        public void Delete(SoftDeleteBot request)
+        {
+            _repo.SoftDeleteBot(request);
+        }
+
+        public void Delete(HardDeleteBot request)
+        {
+            _repo.HardDeleteBot(request);
         }
 
         public object Get(CartItems request)
         {
-            return new CartItemsResponse { CartItems = null };
+            return new CartItemsResponse { CartItems = GetCartBotsJsonData() };
+        }
+
+        public object Post(CartBotDetails request)
+        {
+            return new CartBotDetailsResponse { CartBotDetails = GetCartBotsDetailsById(request) };
+        }
+
+        private object GetCartBotsDetailsById(CartBotDetails request)
+        {
+            return _repo.GetCartBotById(request);
         }
 
         private object GetBotPartsJsonData()
@@ -37,6 +62,11 @@ namespace RobotBuilderService.ServiceInterface
                 string json = r.ReadToEnd();
                 return JsonConvert.DeserializeObject<RobotPartsModel>(json);
             }
+        }
+
+        private object GetCartBotsJsonData()
+        {
+            return _repo.GetCartBots();
         }
     }
 }
