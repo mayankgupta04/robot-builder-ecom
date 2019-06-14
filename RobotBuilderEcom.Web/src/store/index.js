@@ -14,10 +14,10 @@ export default new Vuex.Store({
     setBotToUpdate(state, bot) {
       state.botToUpdate = {
         head: state.parts.heads.find(x => x.id === bot.HeadId),
-        leftArm: state.parts.heads.find(x => x.id === bot.LeftArmId),
-        rightArm: state.parts.heads.find(x => x.id === bot.RightArmId),
-        torso: state.parts.heads.find(x => x.id === bot.TorsoId),
-        base: state.parts.heads.find(x => x.id === bot.BaseId),
+        leftArm: state.parts.arms.find(x => x.id === bot.LeftArmId),
+        rightArm: state.parts.arms.find(x => x.id === bot.RightArmId),
+        torso: state.parts.torsos.find(x => x.id === bot.TorsoId),
+        base: state.parts.bases.find(x => x.id === bot.BaseId),
       };
     },
     updateBotParts(state, parts) {
@@ -71,10 +71,10 @@ export default new Vuex.Store({
             const abc = {
               cartBotId: ci.CartBotId,
               head: state.parts.heads.find(x => x.id === ci.HeadId),
-              leftArm: state.parts.heads.find(x => x.id === ci.LeftArmId),
-              rightArm: state.parts.heads.find(x => x.id === ci.RightArmId),
-              torso: state.parts.heads.find(x => x.id === ci.TorsoId),
-              base: state.parts.heads.find(x => x.id === ci.BaseId),
+              leftArm: state.parts.arms.find(x => x.id === ci.LeftArmId),
+              rightArm: state.parts.arms.find(x => x.id === ci.RightArmId),
+              torso: state.parts.torsos.find(x => x.id === ci.TorsoId),
+              base: state.parts.bases.find(x => x.id === ci.BaseId),
               isActive: ci.IsActive,
               cost: ci.Cost,
             };

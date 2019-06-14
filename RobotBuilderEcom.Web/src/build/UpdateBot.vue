@@ -1,5 +1,5 @@
 <template>
-  <div v-if="availableParts" class="content">
+  <div v-if="availableParts && selectedRobot" class="content">
     <button class="add-to-cart" @click="updateInCart()">Update!</button>
     <div class="top-row">
       <div class="robot-name">
@@ -66,13 +66,7 @@ export default {
       return this.$store.state.parts;
     },
     selectedRobot() {
-      return this.$store.state.botToUpdate || {
-        head: {},
-        leftArm: {},
-        rightArm: {},
-        torso: {},
-        base: {},
-      };
+      return this.$store.state.botToUpdate;
     },
   },
   methods: {
